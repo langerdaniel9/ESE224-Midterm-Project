@@ -19,6 +19,49 @@ Teacher::Teacher(string u, string p, int c, int t, string[] loc) {
 	listOfCopies = loc;				// ??? (Is this how you do this?)
 }
 
+// Getters
+string Teacher::getUser() {
+	return username;
+}
+
+string Teacher::getPass() {
+	return password;
+}
+
+int Teacher::getCopies() {
+	return copies;
+}
+
+int Teacher::getTime() {
+	return borrowTime;
+}
+
+//string[] Teacher::getList() {
+//	return listOfCopies;						// ???
+//}
+
+// Setters
+void Teacher::setUser(string u) {
+	username = u;
+}
+
+void Teacher::getPass(string p) {
+	password = p;
+}
+
+void Teacher::getCopies(int c) {
+	copies = c;
+}
+
+void Teacher::getTime(int t) {
+	borrowTime = t;
+}
+
+//void Teacher::getList(string[] loc) {
+//	listOfCopies = loc;						// ???
+//}
+
+
 // Search book
 
 // Borrow book
