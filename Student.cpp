@@ -63,7 +63,32 @@ void Student::getTime(int t) {
  
 
 // Search book
+void Student::searchBook() {
+	int searchChoice;
+	cout << "How do you want to search your book?: (Pick one of the four options:)" << endl;
+	cout << "(1) - ISBN" << endl;
+	cout << "(2) - title" << endl;
+	cout << "(3) - category" << endl;
+	cout << "(4) - ID" << endl;
+	cin >> searchChoice;
 
+	switch (searchChoice) {
+		case 1: 
+			string ISBN;
+			cout << "What's your ISBN value?: ";
+			getline(cin, ISBN);
+
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		default:
+	}
+
+}
 
 // Borrow book
 

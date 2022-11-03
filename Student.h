@@ -21,4 +21,5 @@ public:
     void setTime(int t);
     void setList(string[] loc);                     // ????
 
+    void searchBook();
 };
