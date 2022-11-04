@@ -36,9 +36,9 @@ int Teacher::getTime() {
 	return borrowTime;
 }
 
-//string[] Teacher::getList() {
-//	return listOfCopies;						// ???
-//}
+vector<string> Teacher::getList() {
+	return listOfCopies;						// ???
+}
 
 // Setters
 void Teacher::setUser(string u) {
@@ -57,9 +57,9 @@ void Teacher::getTime(int t) {
 	borrowTime = t;
 }
 
-//void Teacher::getList(string[] loc) {
-//	listOfCopies = loc;						// ???
-//}
+void Teacher::getList(vector<string> loc) {
+	listOfCopies = loc;						// ???
+}
 
 
 // Search book

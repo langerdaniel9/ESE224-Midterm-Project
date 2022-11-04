@@ -1,5 +1,8 @@
-lsmdlkclksdmc#include <iostream>
+#include <iostream>
+#include <string>
+#include <vector>
 #include "Student.h"
+#include "Book.h"
 
 using namespace std;
 
@@ -36,9 +39,9 @@ int Student::getTime() {
 	return borrowTime;
 }
 
-//string[] Student::getList() {
-//	return listOfCopies;						// ???
-//}
+vector<string> Student::getList() {
+	return listOfCopies;						// ???
+}
 
 // Setters
 void Student::setUser(string u) {
@@ -57,13 +60,26 @@ void Student::getTime(int t) {
 	borrowTime = t;
 }
 
-//void Student::getList(string[] loc) {
-//	listOfCopies = loc;						// ???
-//}
+void Student::getList(vector<string> loc) {
+	listOfCopies = loc;						// ???
+}
  
 
 // Search book
 void Student::searchBook() {
+	// Sorting Library (vector of Books)
+	vector<Book> library;							 // can be commented out for actual vector of book (library)
+	for (int i = 0; i < library.size() - 1; i++) {					// sorting by title
+		for (int j = 0; j < (library.size() - 1 - i); j++) {
+//			int titleCompare = library.at(j).title.compare(library.at(j + 1).title);
+//			if (titleCompare > 0) {
+//				swap(library.at(j), library(j + 1));
+//			}
+		}
+	}
+	
+	quickSort(library, library.begin(), library.end());
+	
 	int searchChoice;
 	cout << "How do you want to search your book?: (Pick one of the four options:)" << endl;
 	cout << "(1) - ISBN" << endl;
@@ -87,6 +103,10 @@ void Student::searchBook() {
 			break;
 		default:
 	}
+
+}
+
+void Student::quickSort(vector<Book> lib, int low, int high) {
 
 }
 
