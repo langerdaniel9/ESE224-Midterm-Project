@@ -50,7 +50,7 @@ int main()
 
 void getUsers(vector<Person> usersList)
 {
-    //Written by Ethan Garcia, some comments by Big Cheese
+    //Written by Ethan Garcia, some comments by Daniel
     // Do file I/O, filename is usersList.txt
     ifstream fin("userList.txt");
     if (fin.fail()) {
@@ -101,7 +101,7 @@ void getUsers(vector<Person> usersList)
 
 void getBooks(vector<Book> bookCatalog)
 {
-    //Written by Ethan Garcia, with comments by big cheese
+    //Written by Ethan Garcia, with comments by Daniel
     // Do file I/O, filename is booksList.txt
     ifstream fin("booksList.txt");
     if (fin.fail()) {
@@ -143,7 +143,7 @@ void getBooks(vector<Book> bookCatalog)
 }
 
 Person login(vector<Person> usersList)
-//written by Ethan Garcia, with some comments by big cheese
+//written by Ethan Garcia, with some comments by Daniel
 {
     while (true) {
         // Prompt for username/ ask if they want to shutdown system
@@ -159,6 +159,7 @@ Person login(vector<Person> usersList)
         }
         else {
             // Else prompt for password
+            cout << "please enter a password:" << endl;
             cin >> passwordin;
             for (int i = 0; i < usersList.size(); i++) {
                 //check if user at i matches the username and password input
