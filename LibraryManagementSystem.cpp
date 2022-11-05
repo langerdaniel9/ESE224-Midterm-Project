@@ -50,55 +50,129 @@ int main()
 
 void getUsers(vector<Person> usersList)
 {
+    //Written by Ethan Garcia, some comments by Big Cheese
     // Do file I/O, filename is usersList.txt
-
-    /* Take in data line by line
+    ifstream fin("userList.txt");
+    if (fin.fail()) {
+        cerr << "error opening userList" << endl;
+        exit(1);
+    }
+    /* 
+    * Ethan's edit, It will be done variable by variable since each Person has 3 fields that need to be read.
+    * 
+    * 
     The format will be
     Role(0=student, 1=teacher)  user_name   password
     */
-
     // If current line is a student, create new student with those attributes and push to the vector
-
     // Else if it is a teacher, create new teacher with those attributes and push to the vector
-
+    int rolein;
+    string userin;
+    string passwordin
+    while (!fin.eof) {
+        fin >> rolein;
+        fin >> userin;
+        fin >> passwordin;
+        //obtained information for one user, start creating Person
+        //for student
+        if (rolin == 0) {
+            Student temp; 
+            //assign values and attributes to temp student
+            temp.settype(0); //this may not be neccessary for creation of student
+            temp.setuserName(userin);
+            temp.setpassword(passwordin);
+            //Does there need to be methods to initialize the maxCopies,maxLoanTime, and copiesBorrowed?
+            usersList.push_back(temp); //push to vector
+        }
+        if (rolin == 1) {
+            Teacher temp;
+            //assign values and attributes to temp teacher
+            temp.settype(1); //this may not be neccessary for creation of teacher
+            temp.setuserName(userin);
+            temp.setpassword(passwordin);
+            //Does there need to be methods to initialize the maxCopies,maxLoanTime, and copiesBorrowed?
+            userList.pushback(temp); //push to vector
+        }
+    }
+    fin.close();
     // When everything is done, close the file and return
-
     return;
 }
 
 void getBooks(vector<Book> bookCatalog)
 {
+    //Written by Ethan Garcia, with comments by big cheese
     // Do file I/O, filename is booksList.txt
-
-    /* Take in data line by line
+    ifstream fin("booksList.txt");
+    if (fin.fail()) {
+        cerr << "error opening booksList" << endl;
+        exit(1);
+    }
+    /* 
+    *  Ethan's edit, file input will be done variable by variable,since there is always a constant
+    *  amount of fields that needs be read.
+    * 
+    * 
+    * 
+    * 
     The format will be
     ISBN    Title  Author  Category    Num_of_copies
     */
-
-    // For each line push a new Book object to the vector with the correct attributes
-
+    int idcount = 0;
+    string isbnin;
+    string titlein;
+    string authorin;
+    string catagoryin;
+    string copyin;
+    while (!fin.eof()) {
+        // For each line push a new Book object to the vector with the correct attributes
+        fin >> isbnin;
+        fin >> titlein;
+        fin >> authorin;
+        fin >> catagoryin;
+        fin >> copyin;
+        for (int i = 0; i < copyin; i++) {
+            Book temp(idcount, isbnin, titlein, autorin, catagoryin);
+            idcount++;
+            bookCatalog.push_back(temp);
+        }
+    }
+    fin.close();
     // When everything is done, close the file and return
-
     return;
 }
 
 Person login(vector<Person> usersList)
+//written by Ethan Garcia, with some comments by big cheese
 {
-    /* while(true){
-    // Prompt for username/ ask if they want to shutdown system
+    while (true) {
+        // Prompt for username/ ask if they want to shutdown system
+        cout << "please enter a user name or press 0 to log out:" << endl;
+        string userin;
+        string passwordin;
+        cin >> userin;
+        // If shutdown system, exit
+        // exit(0);
+        if (userin == "0") {
+            cout << "logging out..." << endl;
+            exit(0);
+        }
+        else {
+            // Else prompt for password
+            cin >> passwordin;
+            for (int i = 0; i < usersList.size(); i++) {
+                //check if user at i matches the username and password input
+                // If exists, return that user
+                if ((usersList.at(i).getuserName() == userin) && (usersList.at(i).getpassword() == passwordin) {
+                    cout << "Account found. Logging in..." << endl;
+                    return userList.at(i);
+                }
+            }
+            // If not, print an error and say try again
+            cout << "Account not found. Please try again"<< endl;
 
-    // If shutdown system, exit
-    // exit(0);
-
-    // Else prompt for password
-
-    // Run through usersList and check if such a user exists
-
-    // If exists, return that user
-
-    // If not, print an error and say try again
-
-    }*/
+        }
+    }
 }
 
 int date(time_t zeroTime)
