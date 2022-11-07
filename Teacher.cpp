@@ -8,11 +8,11 @@ Teacher::Teacher(string u, string p, int c, int t, string[] loc) {
 	username = u;
 	password = p;
 
-	if ((c >= 0) && (c <= 5)) {
+	if ((c >= 0) && (c <= 10)) {
 		copies = c;
 	}
 
-	if ((t >= 0) && t <= 30) {
+	if ((t >= 0) && t <= 50) {
 		borrowTime = t;
 	}
 

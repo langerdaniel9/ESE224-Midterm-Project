@@ -23,6 +23,9 @@ protected:
 
 public:
     Person();
+    void searchBook();
+    void quickSort(vector<Book> lib, int low, int high);
+    int partition(vector<Book> lib, int low, int high);
 };
 
 /////////////////
@@ -32,8 +35,11 @@ class Student : public Person
 {
 private:
     // max copies, max time
+    maxCopies = 5;
+    maxLoanTime = 30;
 public:
-    Student();
+    Student();                      // Constructors
+    Student(string type, string u, string p, int c, int t, vector<Book> loc);
 };
 
 /////////////////
@@ -43,6 +49,9 @@ class Teacher : public Person
 {
 private:
     // max copies, max time
+    maxCopies = 10;
+    maxLoanTime = 50;
 public:
     Teacher();
+    Teacher(string type, string u, string p, int c, int t, vector<Book> loc);
 };

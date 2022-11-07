@@ -11,11 +11,11 @@ Student::Student(string u, string p, int c, int t, vector<string> loc) {
 	username = u;
 	password = p;
 
-	if ((c >= 0) && (c <= 10)) {
+	if ((c >= 0) && (c <= 5)) {
 		copies = c;
 	}
 
-	if ((t >= 0) && t <= 50) {
+	if ((t >= 0) && t <= 30) {
 		borrowTime = t;
 	}
 
