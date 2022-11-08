@@ -17,8 +17,8 @@ private:
 
 public:
     Book();
-    Book(int id, string isbn, string title, string author, string, category);
-    
+    Book(int id, string isbn, string title, string author, string category);
+
     // ********** ACCESSORS **********
     string getIsbn();
     string getTitle();
@@ -40,6 +40,6 @@ public:
     void setExpDate(int expDate);
 
     // ********** OPERATION OVERLOADING **********
-    ostream& operator <<(ostream& output, const Book& book);
-    istream& operator >>(istream& input, Book& book);
+    friend ostream &operator<<(ostream &output, Book &book);
+    friend istream &operator>>(istream &input, Book &book);
 };

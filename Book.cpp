@@ -1,9 +1,12 @@
 #include "Book.h"
+
 #include <iostream>
 #include <string>
+
 using namespace std;
 
-Book::Book() {
+Book::Book()
+{
 	id = 0;
 	isbn = "";
 	title = "";
@@ -14,7 +17,8 @@ Book::Book() {
 	expDate = 0;
 }
 
-Book::Book(int id, string isbn, string title, string author, string, category) {
+Book::Book(int id, string isbn, string title, string author, string category)
+{
 	this->id = id;
 	this->isbn = isbn;
 	this->title = title;
@@ -27,99 +31,119 @@ Book::Book(int id, string isbn, string title, string author, string, category) {
 
 // ******************** ACCESSORS ********************
 
-string Book::getIsbn() {
+string Book::getIsbn()
+{
 	return isbn;
 }
 
-string Book::getTitle() {
+string Book::getTitle()
+{
 	return title;
 }
 
-string Book::getAuthor() {
+string Book::getAuthor()
+{
 	return author;
 }
 
-string Book::getCategory() {
+string Book::getCategory()
+{
 	return category;
 }
 
-int Book::getId() {
+int Book::getId()
+{
 	return id;
 }
 
-string Book::getReaderName() {
+string Book::getReaderName()
+{
 	return readerName;
 }
 
-int Book::getStartDate() {
+int Book::getStartDate()
+{
 	return startDate;
 }
 
-int Book::getExpDate() {
+int Book::getExpDate()
+{
 	return expDate;
 }
 
-
 // ******************** MUTATORS ********************
 
-void Book::setIsbn(string isbn) {
+void Book::setIsbn(string isbn)
+{
 	this->isbn = isbn;
 }
 
-void Book::setTitle(string title) {
+void Book::setTitle(string title)
+{
 	this->title = title;
 }
 
-void Book::setAuthor(string author) {
+void Book::setAuthor(string author)
+{
 	this->author = author;
 }
 
-void Book::setCategory(string category) {
+void Book::setCategory(string category)
+{
 	this->category = category;
 }
 
-void Book::setId(int id) {
+void Book::setId(int id)
+{
 	this->id = id;
 }
 
-void Book::setReaderName(string readerName) {
+void Book::setReaderName(string readerName)
+{
 	this->readerName = readerName;
 }
 
-void Book::setStartDate(int startDate) {
+void Book::setStartDate(int startDate)
+{
 	this->startDate = startDate;
 }
 
-void Book::setExpDate(int expDate) {
+void Book::setExpDate(int expDate)
+{
 	this->expDate = expDate;
 }
 
-
 // ******************** OPERATION OVERLOADING ********************
 
-ostream& Book::operator <<(ostream& output, const Book& book) {
+ostream &operator<<(ostream &output, Book &book)
+{
 	string studentname = "NONE";
-	if (!book) {
+	// If book doesnt exist
+	if (book.getTitle() == "")
+	{
 		return output;
 	}
-	if (book.getReader()) {
-		studentname = book.getReader();
+	if ((book.getReaderName()) != "")
+	{
+		studentname = book.getReaderName();
 	}
 	output << "ID:\t" << book.getId() << endl
-		<< "ISBN:\t" << book.getIsbn() << endl
-		<< "Title:\t" << book.getTitle() << endl
-		<< "Author:\t" << book.getAuthor() << endl
-		<< "Category:\t" << book.getCategory() << endl
-		<< "Reader:\t" << studentname << endl
-		<< "Start Date:\t" << book.getStartDate() << endl
-		<< "Expires:\t" << book.getExpDate() << endl;
+		   << "ISBN:\t" << book.getIsbn() << endl
+		   << "Title:\t" << book.getTitle() << endl
+		   << "Author:\t" << book.getAuthor() << endl
+		   << "Category:\t" << book.getCategory() << endl
+		   << "Reader:\t" << studentname << endl
+		   << "Start Date:\t" << book.getStartDate() << endl
+		   << "Expires:\t" << book.getExpDate() << endl;
+
+	return output;
 }
 
-istream& operator >>(istream& input, Book& book) {
+istream &operator>>(istream &input, Book &book)
+{
 	int id, startDate, expDate;
 	string isbn, title, author, category, readerName;
-	input >> id >> isbn >> title >> author >> category 
-		>> readerName >> startDate >> expDate;
+	input >> id >> isbn >> title >> author >> category >> readerName >> startDate >> expDate;
 	book.setId(id);
 	book.setIsbn(isbn);
 	book.setTitle(title);
