@@ -152,4 +152,6 @@ istream &operator>>(istream &input, Book &book)
 	book.setReaderName(readerName);
 	book.setStartDate(startDate);
 	book.setExpDate(expDate);
+
+	return input;
 }

@@ -1,19 +1,18 @@
-#include "Book.h"
-#include "Person.h"
 
 #include <iostream>
 #include <string>
 #include <ctime>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
 void getUsers(vector<Person> usersList);
-void getBooks(vector<Book> bookCatalog);
+void getBooks(vector<Book> bookCatalog, int &idcount);
 Person login(vector<Person> usersList);
 int date(time_t zeroTime);
 void studentLoop(Person user, vector<Book> bookCatalog, time_t zeroTime);
-void teacherLoop(Person user, vector<Book> bookCatalog, time_t zeroTime);
+void teacherLoop(Person user, vector<Book> bookCatalog, time_t zeroTime, int &idCount);
 
 int main()
 {
@@ -22,23 +21,30 @@ int main()
     vector<Person> usersList;
 
     // Read in data from student.txt and book.txt
+    int idCount = 0;
     getUsers(usersList);
-    getBooks(bookCatalog);
+    getBooks(bookCatalog, idCount);
 
     // Login system, can log in and log out on the same run
     Person currentUser;
+
+    //////////////////
+    time_t zeroTime = time(NULL);
+    studentLoop(currentUser, bookCatalog, zeroTime);
+    //////////////////
+
     while (true)
     {
         currentUser = login(usersList);
         time_t zeroTime = time(NULL);
 
-        if (currentUser.type() == "Student") // This may need to be changed whenever .type() is implemented
+        if (currentUser.getType() == "Student")
         {
             studentLoop(currentUser, bookCatalog, zeroTime);
         }
-        else if (currentUser.type() == "Teacher") // This may need to be changed whenever .type() is implemented
+        else if (currentUser.getType() == "Teacher")
         {
-            teacherLoop(currentUser, bookCatalog, zeroTime);
+            teacherLoop(currentUser, bookCatalog, zeroTime, idCount);
         }
         else
         {
@@ -50,128 +56,120 @@ int main()
 
 void getUsers(vector<Person> usersList)
 {
-    //Written by Ethan Garcia, some comments by Daniel
+    // Written by Ethan Garcia, some comments by Daniel
     // Do file I/O, filename is usersList.txt
     ifstream fin("userList.txt");
-    if (fin.fail()) {
+    if (fin.fail())
+    {
         cerr << "error opening userList" << endl;
         exit(1);
     }
-    /* 
-    * Ethan's edit, It will be done variable by variable since each Person has 3 fields that need to be read.
-    * 
-    * 
-    The format will be
-    Role(0=student, 1=teacher)  user_name   password
-    */
+
+    /* Ethan's edit, It will be done variable by variable since each Person has 3 fields that need to be read.
+     *
+     * The format will be
+     * Role(0=student, 1=teacher)  user_name   password
+     */
+
     // If current line is a student, create new student with those attributes and push to the vector
     // Else if it is a teacher, create new teacher with those attributes and push to the vector
+
     int rolein;
     string userin;
-    string passwordin
-    while (!fin.eof) {
-        fin >> rolein;
-        fin >> userin;
-        fin >> passwordin;
-        //obtained information for one user, start creating Person
-        //for student
-        if (rolin == 0) {
-            Student temp; 
-            //assign values and attributes to temp student
-            temp.settype(0); //this may not be neccessary for creation of student
-            temp.setuserName(userin);
-            temp.setpassword(passwordin);
-            //Does there need to be methods to initialize the maxCopies,maxLoanTime, and copiesBorrowed?
-            usersList.push_back(temp); //push to vector
+    string passwordin;
+    while (!(fin.eof()))
+    {
+        fin >> rolein >> userin >> passwordin;
+        // obtained information for one user, start creating Person
+        if (rolein == 0) // for student
+        {
+            // assign values and attributes to temp student
+            Student temp(userin, passwordin);
+            // push to vector
+            usersList.push_back(temp);
         }
-        if (rolin == 1) {
-            Teacher temp;
-            //assign values and attributes to temp teacher
-            temp.settype(1); //this may not be neccessary for creation of teacher
-            temp.setuserName(userin);
-            temp.setpassword(passwordin);
-            //Does there need to be methods to initialize the maxCopies,maxLoanTime, and copiesBorrowed?
-            userList.pushback(temp); //push to vector
+        if (rolein == 1) // for teacher
+        {
+            // assign values and attributes to temp teacher
+            Teacher temp(userin, passwordin);
+            // push to vector
+            usersList.push_back(temp);
         }
     }
-    fin.close();
     // When everything is done, close the file and return
-    return;
+    fin.close();
 }
 
-void getBooks(vector<Book> bookCatalog)
+void getBooks(vector<Book> bookCatalog, int &idcount)
 {
-    //Written by Ethan Garcia, with comments by Daniel
+    // Written by Ethan Garcia, with comments by Daniel
     // Do file I/O, filename is booksList.txt
     ifstream fin("booksList.txt");
-    if (fin.fail()) {
+    if (fin.fail())
+    {
         cerr << "error opening booksList" << endl;
         exit(1);
     }
-    /* 
-    *  Ethan's edit, file input will be done variable by variable,since there is always a constant
-    *  amount of fields that needs be read.
-    * 
-    * 
-    * 
-    * 
-    The format will be
-    ISBN    Title  Author  Category    Num_of_copies
-    */
-    int idcount = 0;
+    /*  Ethan's edit, file input will be done variable by variable,since there is always a constant
+     *  amount of fields that needs be read.
+     *
+     * The format will be
+     * ISBN    Title  Author  Category    Num_of_copies
+     */
     string isbnin;
     string titlein;
     string authorin;
     string catagoryin;
     string copyin;
-    while (!fin.eof()) {
+    while (!fin.eof())
+    {
         // For each line push a new Book object to the vector with the correct attributes
-        fin >> isbnin;
-        fin >> titlein;
-        fin >> authorin;
-        fin >> catagoryin;
-        fin >> copyin;
-        for (int i = 0; i < copyin; i++) {
-            Book temp(idcount, isbnin, titlein, autorin, catagoryin);
+        fin >> isbnin >> titlein >> authorin >> catagoryin >> copyin;
+        // If there are multiple copies
+        for (int i = 0; i < stoi(copyin); i++)
+        {
+            Book temp(idcount, isbnin, titlein, authorin, catagoryin);
             idcount++;
             bookCatalog.push_back(temp);
         }
     }
-    fin.close();
     // When everything is done, close the file and return
-    return;
+    fin.close();
 }
 
 Person login(vector<Person> usersList)
-//written by Ethan Garcia, with some comments by Daniel
+// written by Ethan Garcia, with some comments by Daniel
 {
-    while (true) {
+    while (true)
+    {
         // Prompt for username/ ask if they want to shutdown system
-        cout << "please enter a user name or press 0 to log out:" << endl;
+        cout << "Please enter a user name or press 0 to log out:" << endl;
         string userin;
         string passwordin;
         cin >> userin;
         // If shutdown system, exit
-        // exit(0);
-        if (userin == "0") {
-            cout << "logging out..." << endl;
+        if (userin == "0")
+        {
+            cout << "Logging out..." << endl;
             exit(0);
         }
-        else {
+        else
+        {
             // Else prompt for password
-            cout << "please enter a password:" << endl;
+            cout << "Please enter a password:" << endl;
             cin >> passwordin;
-            for (int i = 0; i < usersList.size(); i++) {
-                //check if user at i matches the username and password input
+            for (int i = 0; i < usersList.size(); i++)
+            {
+                // Check if user at i matches the username and password input
                 // If exists, return that user
-                if ((usersList.at(i).getuserName() == userin) && (usersList.at(i).getpassword() == passwordin) {
+                if ((usersList.at(i).getUserName() == userin) && (usersList.at(i).getPassword() == passwordin))
+                {
                     cout << "Account found. Logging in..." << endl;
-                    return userList.at(i);
+                    return usersList.at(i);
                 }
             }
             // If not, print an error and say try again
-            cout << "Account not found. Please try again"<< endl;
-
+            cout << "Account not found. Please try again" << endl;
         }
     }
 }
@@ -218,25 +216,29 @@ void studentLoop(Person user, vector<Book> bookCatalog, time_t zeroTime)
         case 1:
         {
             // Search Book
-            user.search(bookCatalog);
+            // user.search(bookCatalog, zeroTime);
+            cout << "You have entered search" << endl;
             break;
         }
         case 2:
         {
             // Borrow Book
-            user.borrow(bookCatalog);
+            // user.borrow(bookCatalog);
+            cout << "You have entered borrow" << endl;
             break;
         }
         case 3:
         {
             // Return Book
-            user.return (bookCatalog);
+            // user.bookReturn(bookCatalog);
+            cout << "You have entered return" << endl;
             break;
         }
         case 4:
         {
             // Renew Book
-            user.renew(bookCatalog);
+            // user.renew(bookCatalog);
+            cout << "You have entered renew" << endl;
             break;
         }
 
@@ -249,7 +251,7 @@ void studentLoop(Person user, vector<Book> bookCatalog, time_t zeroTime)
     }
 }
 
-void teacherLoop(Person user, vector<Book> bookCatalog, time_t zeroTime)
+void teacherLoop(Person user, vector<Book> bookCatalog, time_t zeroTime, int &idCount)
 
 {
     while (true)
@@ -286,37 +288,37 @@ void teacherLoop(Person user, vector<Book> bookCatalog, time_t zeroTime)
         case 1:
         {
             // Search Book
-            user.search(bookCatalog);
+            // user.search(bookCatalog);
             break;
         }
         case 2:
         {
             // Borrow Book
-            user.borrow(bookCatalog);
+            // user.borrow(bookCatalog);
             break;
         }
         case 3:
         {
             // Return Book
-            user.return (bookCatalog);
+            // user.bookReturn(bookCatalog);
             break;
         }
         case 4:
         {
             // Renew Book
-            user.renew(bookCatalog);
+            // user.renew(bookCatalog);
             break;
         }
         case 5:
         {
             // Request new book
-            user.request(bookCatalog);
+            // user.request(bookCatalog, idCount);
             break;
         }
         case 6:
         {
             // Delete book from vector
-            user.delete(bookCatalog);
+            // user.delete(bookCatalog);
             break;
         }
 
