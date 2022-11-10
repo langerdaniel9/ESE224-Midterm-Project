@@ -13,8 +13,8 @@ Book::Book()
 	author = "";
 	category = "";
 	readerName = "";
-	startDate = 0;
-	expDate = 0;
+	startDate = -1;
+	expDate = -1;
 }
 
 Book::Book(int id, string isbn, string title, string author, string category)
@@ -25,8 +25,8 @@ Book::Book(int id, string isbn, string title, string author, string category)
 	this->author = author;
 	this->category = category;
 	readerName = "";
-	startDate = 0;
-	expDate = 0;
+	startDate = -1;
+	expDate = -1;
 }
 
 // ******************** ACCESSORS ********************
@@ -134,7 +134,8 @@ ostream &operator<<(ostream &output, Book &book)
 		   << "Category:\t" << book.getCategory() << endl
 		   << "Reader:\t" << studentname << endl
 		   << "Start Date:\t" << book.getStartDate() << endl
-		   << "Expires:\t" << book.getExpDate() << endl;
+		   << "Expires:\t" << book.getExpDate() << endl
+		   << endl;
 
 	return output;
 }
