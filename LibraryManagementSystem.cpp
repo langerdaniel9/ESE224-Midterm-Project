@@ -14,7 +14,6 @@ struct toReturn
 void getUsers(vector<Student> &studentList, vector<Teacher> &teacherList);
 void getBooks(vector<Book> &bookCatalog, int &idcount);
 toReturn login(vector<Student> &studentList, vector<Teacher> &teacherList);
-// int date(time_t zeroTime);
 void studentLoop(Student user, vector<Book> bookCatalog, time_t &zeroTime);
 void teacherLoop(Teacher user, vector<Book> bookCatalog, time_t &zeroTime, int &idCount);
 
@@ -22,7 +21,6 @@ int main()
 {
     // Data to be read in from text files
     vector<Book> bookCatalog;
-    vector<Person> usersList;
     vector<Student> studentList;
     vector<Teacher> teacherList;
 
@@ -196,14 +194,6 @@ toReturn login(vector<Student> &studentList, vector<Teacher> &teacherList)
         }
     }
 }
-
-// int date(time_t zeroTime)
-// {
-//     // How many real life seconds it takes for a virtual day to pass
-//     int dayLength = 5;
-//     time_t currentTime = time(NULL);
-//     return (currentTime - zeroTime) / dayLength;
-// }
 
 void studentLoop(Student user, vector<Book> bookCatalog, time_t &zeroTime)
 {
