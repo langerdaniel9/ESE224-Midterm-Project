@@ -357,7 +357,7 @@ void Person::borrowBook(vector<Book> &bookCatalog, time_t &zeroTime)
 	{
 		if (bookCatalog.at(i).getId() == toBeBorrowed.getId())
 		{
-			int currentTime = date(zeroTime); // TODO - check if this works
+			int currentTime = date(zeroTime);
 			bookCatalog.at(i).setStartDate(currentTime);
 			bookCatalog.at(i).setExpDate(currentTime + this->getMaxLoanTime());
 			bookCatalog.at(i).setReaderName(this->getUserName());
