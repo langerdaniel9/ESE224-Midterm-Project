@@ -160,7 +160,8 @@ toReturn login(vector<Student> &studentList, vector<Teacher> &teacherList)
         // If shutdown system, exit
         if (userin == "0")
         {
-            cout << "Logging out..." << endl;
+            cout << "Logging out..." << endl
+                 << endl;
             exit(0);
         }
         else
@@ -174,7 +175,8 @@ toReturn login(vector<Student> &studentList, vector<Teacher> &teacherList)
                 // If exists, return that user
                 if ((studentList.at(i).getUserName() == userin) && (studentList.at(i).getPassword() == passwordin))
                 {
-                    cout << "Account found. Logging in..." << endl;
+                    cout << "Account found. Logging in..." << endl
+                         << endl;
                     return toReturn{"Student", i};
                 }
             }
@@ -185,12 +187,14 @@ toReturn login(vector<Student> &studentList, vector<Teacher> &teacherList)
                 // If exists, return that user
                 if ((teacherList.at(i).getUserName() == userin) && (teacherList.at(i).getPassword() == passwordin))
                 {
-                    cout << "Account found. Logging in..." << endl;
+                    cout << "Account found. Logging in..." << endl
+                         << endl;
                     return toReturn{"Teacher", i};
                 }
             }
             // If not, print an error and say try again
-            cout << "Account not found. Please try again" << endl;
+            cout << "Account not found. Please try again" << endl
+                 << endl;
         }
     }
 }
@@ -214,7 +218,8 @@ void studentLoop(Student user, vector<Book> bookCatalog, time_t &zeroTime)
         cin >> choice;
         if (cin.fail())
         {
-            cout << "Invalid input" << endl;
+            cout << "Invalid input" << endl
+                 << endl;
             // Reset cin and clear the failbit
             cin.clear();
             cin.ignore();
@@ -248,7 +253,7 @@ void studentLoop(Student user, vector<Book> bookCatalog, time_t &zeroTime)
         case 4:
         {
             // Renew Book
-            user.renewBook();
+            user.renewBook(bookCatalog);
             break;
         }
 
@@ -283,7 +288,8 @@ void teacherLoop(Teacher user, vector<Book> bookCatalog, time_t &zeroTime, int &
         cin >> choice;
         if (cin.fail())
         {
-            cout << "Invalid input" << endl;
+            cout << "Invalid input" << endl
+                 << endl;
             // Reset cin and clear the failbit
             cin.clear();
             cin.ignore();
@@ -317,7 +323,7 @@ void teacherLoop(Teacher user, vector<Book> bookCatalog, time_t &zeroTime, int &
         case 4:
         {
             // Renew Book
-            user.renewBook();
+            user.renewBook(bookCatalog);
             break;
         }
         case 5:

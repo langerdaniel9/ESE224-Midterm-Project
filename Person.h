@@ -38,7 +38,7 @@ public:
     void searchBook(vector<Book> &bookCatalog);
     void borrowBook(vector<Book> &bookCatalog, time_t &zeroTime);
     void returnBook(vector<Book> &bookCatalog);
-    void renewBook();
+    void renewBook(vector<Book> &bookCatalog);
 };
 
 /////////////////

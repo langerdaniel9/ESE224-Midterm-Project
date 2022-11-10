@@ -13,7 +13,7 @@ using namespace std;
 int date(time_t &zeroTime)
 {
 	// How many real life seconds it takes for a virtual day to pass
-	int dayLength = 5;
+	int dayLength = 1;
 	time_t currentTime = time(NULL);
 	return ((currentTime - zeroTime) / dayLength);
 }
@@ -123,7 +123,10 @@ void Person::searchBook(vector<Book> &bookCatalog)
 		for (int i = 0; i < bookCatalog.size(); i++)
 		{
 			// At least a partial match on isbn
-			if (bookCatalog.at(i).getIsbn().find(inputISBN) != string::npos)
+			string s = bookCatalog.at(i).getIsbn();
+			transform(s.begin(), s.end(), s.begin(), ::tolower);
+			transform(inputISBN.begin(), inputISBN.end(), inputISBN.begin(), ::tolower);
+			if (s.find(inputISBN) != string::npos)
 			{
 				// Books with matching criteria get pushed to search results vector
 				searchMatches.push_back(bookCatalog.at(i));
@@ -140,7 +143,10 @@ void Person::searchBook(vector<Book> &bookCatalog)
 		for (int i = 0; i < bookCatalog.size(); i++)
 		{
 			// At least a partial match on title
-			if (bookCatalog.at(i).getTitle().find(inputTitle) != string::npos)
+			string s = bookCatalog.at(i).getTitle();
+			transform(s.begin(), s.end(), s.begin(), ::tolower);
+			transform(inputTitle.begin(), inputTitle.end(), inputTitle.begin(), ::tolower);
+			if (s.find(inputTitle) != string::npos)
 			{
 				// Books with matching criteria get pushed to search results vector
 				searchMatches.push_back(bookCatalog.at(i));
@@ -156,7 +162,10 @@ void Person::searchBook(vector<Book> &bookCatalog)
 		for (int i = 0; i < bookCatalog.size(); i++)
 		{
 			// At least a partial match on category
-			if (bookCatalog.at(i).getCategory().find(inputCategory) != string::npos)
+			string s = bookCatalog.at(i).getCategory();
+			transform(s.begin(), s.end(), s.begin(), ::tolower);
+			transform(inputCategory.begin(), inputCategory.end(), inputCategory.begin(), ::tolower);
+			if (s.find(inputCategory) != string::npos)
 			{
 				// Books with matching criteria get pushed to search results vector
 				searchMatches.push_back(bookCatalog.at(i));
@@ -305,6 +314,7 @@ void Person::borrowBook(vector<Book> &bookCatalog, time_t &zeroTime)
 		{
 			cout << book;
 		}
+		return;
 	}
 
 	int inputID;
@@ -368,6 +378,13 @@ void Person::borrowBook(vector<Book> &bookCatalog, time_t &zeroTime)
 // Return book
 void Person::returnBook(vector<Book> &bookCatalog)
 {
+	if (this->getBooksBorrowed().size() == 0)
+	{
+		cout << "You are not currently borrowing any books." << endl
+			 << endl;
+		return;
+	}
+
 	cout << "Here are all the books you are currently borrowing:" << endl;
 
 	for (Book book : this->getBooksBorrowed())
@@ -380,12 +397,24 @@ void Person::returnBook(vector<Book> &bookCatalog)
 	cin >> id;
 
 	// Remove book from users 'borrowed books' list
+	bool returned = false;
 	for (int i = 0; i < this->copiesBorrowed.size(); i++)
 	{
 		if (this->copiesBorrowed.at(i).getId() == id)
 		{
+			cout << "Returning book" << endl
+				 << endl;
+			returned = true;
 			this->copiesBorrowed.erase(this->copiesBorrowed.begin() + i);
 		}
+	}
+
+	if (!returned)
+	{
+		cout << endl
+			 << "You dont have that book checked out, try again" << endl
+			 << endl;
+		return;
 	}
 
 	// Change the properties of the returned book to reflect that it is available
@@ -402,7 +431,7 @@ void Person::returnBook(vector<Book> &bookCatalog)
 }
 
 // Renew book
-void Person::renewBook()
+void Person::renewBook(vector<Book> &bookCatalog)
 {
 	if (this->getBooksBorrowed().size() == 0)
 	{
@@ -423,12 +452,36 @@ void Person::renewBook()
 	int id;
 	cin >> id;
 
+	bool renewed = false;
 	for (int i = 0; i < this->getBooksBorrowed().size(); i++)
 	{
 		if (this->getBooksBorrowed().at(i).getId() == id)
 		{
-			this->getBooksBorrowed().at(i).setExpDate(this->getBooksBorrowed().at(i).getExpDate() + this->getMaxLoanTime());
+			renewed = true;
+			cout << "Renewing book" << endl
+				 << endl;
+
+			copiesBorrowed.at(i).setExpDate(copiesBorrowed.at(i).getExpDate() + this->getMaxLoanTime());
 		}
+	}
+
+	if (renewed)
+	{
+		for (int i = 0; i < bookCatalog.size(); i++)
+		{
+			if (bookCatalog.at(i).getId() == id)
+			{
+				bookCatalog.at(i).setExpDate(bookCatalog.at(i).getExpDate() + this->getMaxLoanTime());
+			}
+		}
+	}
+
+	if (!renewed)
+	{
+		cout << endl
+			 << "Cant renew that book since you dont have it checked out" << endl
+			 << endl;
+		return;
 	}
 }
 
